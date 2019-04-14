@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3031;
 let currentSong = '';
 
 server = express()
-  .post('newsong', (req, res) => {
+  .post('/newsong', (req, res) => {
     const song = req.body;
 
     if (!song || typeof song !== 'string') {
