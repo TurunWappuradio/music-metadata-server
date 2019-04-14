@@ -13,6 +13,8 @@ server = express()
       return res.sendStatus(400)
     }
 
+    console.log(`Received new song: ${song}`);
+
     currentSong = song;
     res.sendStatus(200);
   })
