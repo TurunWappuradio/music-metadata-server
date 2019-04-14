@@ -5,6 +5,7 @@ const WebSocket = require('ws');
 const PORT = process.env.PORT || 3031;
 
 let currentSong = '';
+let sendToSocket = () => {};
 
 server = express()
   .use(bodyParser.json())
@@ -16,8 +17,8 @@ server = express()
     }
 
     console.log(`Received new song: ${song}`);
-
     currentSong = song;
+    sendToSocket(song);
     res.sendStatus(200);
   })
   .listen(PORT, () => {
@@ -26,6 +27,12 @@ server = express()
 
 const wss = new WebSocket.Server({ server });
 
-wss.on('connection', function connection(ws) {
-  ws.send(currentSong);
+sendToSocket = song => {
+  wss.clients.forEach(client => {
+    client.send(song);
+  });
+};
+
+wss.on('connection', client => {
+  client.send(currentSong);
 });
