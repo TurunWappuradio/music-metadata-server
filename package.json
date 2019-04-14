@@ -1,0 +1,26 @@
+{
+  "name": "music-metadata-server",
+  "version": "1.0.0",
+  "description": "Receive metadata as a HTTP POST request and send it to clients via websockets.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TurunWappuradio/music-metadata-server.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TurunWappuradio/music-metadata-server/issues"
+  },
+  "homepage": "https://github.com/TurunWappuradio/music-metadata-server#readme",
+  "dependencies": {
+    "bufferutil": "4.0.1",
+    "express": "^4.16.4",
+    "utf-8-validate": "5.0.2",
+    "ws": "6.2.1"
+  }
+}
