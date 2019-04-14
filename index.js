@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const WebSocket = require('ws');
 
 const PORT = process.env.PORT || 3031;
@@ -6,8 +7,9 @@ const PORT = process.env.PORT || 3031;
 let currentSong = '';
 
 server = express()
+  .use(bodyParser.json())
   .post('/newsong', (req, res) => {
-    const song = req.body;
+    const { song } = req.body;
 
     if (!song || typeof song !== 'string') {
       return res.sendStatus(400)
