@@ -40,3 +40,9 @@ wss.on('connection', client => {
 
   client.send(currentSong);
 });
+
+setInterval(() => {
+  wss.clients.forEach((client) => {
+    client.send('PING');
+  });
+}, 1000);
