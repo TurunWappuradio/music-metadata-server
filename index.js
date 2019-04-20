@@ -34,5 +34,9 @@ sendToSocket = song => {
 };
 
 wss.on('connection', client => {
+  client.on('message', message => {
+    console.log('received: %s', message);
+  });
+
   client.send(currentSong);
 });
