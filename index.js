@@ -1,46 +1,50 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const WebSocket = require('ws');
+const WebSocket = require('express-ws');
 
 const PORT = process.env.PORT || 3031;
 
 let currentSong = '';
 let sendToSocket = () => {};
 
-server = express()
-  .use(bodyParser.json())
-  .post('/newsong', (req, res) => {
-    const { song } = req.body;
+const app = express();
+const expressWs = WebSocket(app);
+const wss = expressWs.getWss('/');
 
-    if (!song || typeof song !== 'string') {
-      return res.sendStatus(400)
-    }
+app.use(bodyParser.json());
 
-    console.log(`Received new song: ${song}`);
-    currentSong = song;
-    sendToSocket(song);
-    res.sendStatus(200);
-  })
-  .listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`)
-  });
+app.post('/newsong', (req, res) => {
+  const { song } = req.body;
 
-const wss = new WebSocket.Server({ server });
+  if (!song || typeof song !== 'string') {
+    return res.sendStatus(400)
+  }
+
+  console.log(`Received new song: ${song}`);
+  currentSong = song;
+  sendToSocket(song);
+  res.sendStatus(200);
+});
+
 
 sendToSocket = song => {
-  wss.clients.forEach(client => {
-    client.send(song);
-  });
+  if (song !== '') {
+    wss.clients.forEach(client => {
+      client.send(song);
+    });
+  }
 };
 
-wss.on('connection', client => {
+app.ws('/', client => {
   client.on('message', message => {
     if (message !== 'PONG') {
       console.log('received: %s', message);
     }
   });
 
-  client.send(currentSong);
+  if (currentSong !== '') {
+    client.send(currentSong);
+  }
 });
 
 setInterval(() => {
@@ -48,3 +52,7 @@ setInterval(() => {
     client.send('PING');
   });
 }, 1000);
+
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`)
+});
