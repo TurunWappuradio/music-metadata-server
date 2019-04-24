@@ -1,12 +1,18 @@
 const fetch = require('node-fetch');
 
 const testPost = async () => {
+  const body = JSON.stringify({
+    song: 'ANSSI - 1972',
+    password: '12345'
+  });
+
   const res = await fetch('http://localhost:3031/newsong', {
     method: 'POST',
+    mode: 'no-cors',
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ song: 'Anssi Kela - 1972' })
+    body
   });
 
   if (!res.ok) {

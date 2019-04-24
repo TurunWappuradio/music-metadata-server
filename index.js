@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const WebSocket = require('express-ws');
 
 const PORT = process.env.PORT || 3031;
+const MUSIC_API_PASSWORD = process.env.MUSIC_API_PASSWORD;
 
 let currentSong = '';
 let sendToSocket = () => {};
@@ -11,13 +12,19 @@ const app = express();
 const expressWs = WebSocket(app);
 const wss = expressWs.getWss('/');
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+  type: ['application/json', 'text/plain']
+}));
 
 app.post('/newsong', (req, res) => {
-  const { song } = req.body;
+  const { song, password } = req.body;
 
   if (!song || typeof song !== 'string') {
-    return res.sendStatus(400)
+    return res.sendStatus(400); // 400 Bad Request
+  }
+
+  if (password !== MUSIC_API_PASSWORD) {
+    return res.sendStatus(403); // 403 Forbidden
   }
 
   console.log(`Received new song: ${song}`);
