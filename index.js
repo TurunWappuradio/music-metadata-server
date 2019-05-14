@@ -13,10 +13,11 @@ const expressWs = WebSocket(app);
 const wss = expressWs.getWss('/');
 
 app.use(bodyParser.json({
-  type: ['application/json', 'text/plain']
+  type: ['application/json', 'text/plain'] // for getting past Heroku CORS block
 }));
 
 app.post('/newsong', (req, res) => {
+  // TODO: password should not be in body
   const { song, password } = req.body;
 
   if (!song || typeof song !== 'string') {
