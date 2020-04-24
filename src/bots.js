@@ -5,7 +5,9 @@ const chatId = process.env.CHAT_ID;
 
 function sendTelegramMessage(message) {
   return fetch(
-    `https://api.telegram.org/bot${botId}/sendMessage?chat_id=${chatId}&text=${message}&parse_mode=html`,
+    `https://api.telegram.org/bot${botId}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(
+      message
+    )}&parse_mode=html`,
     {
       method: "POST"
     }
