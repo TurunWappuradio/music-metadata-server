@@ -18,6 +18,11 @@ function dispatchMetaInformation(song) {
   if (!song || !botId || !chatId) {
     return;
   }
+
+  if (/turun wappuradio/.test(song.toLowerCase())) {
+    return;
+  }
+
   return sendTelegramMessage(`Biisi: <b>${song}</b>`);
 }
 
