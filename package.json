@@ -24,6 +24,6 @@
     "utf-8-validate": "5.0.2"
   },
   "devDependencies": {
-    "node-fetch": "^2.3.0"
+    "node-fetch": "~2.6.0"
   }
 }
