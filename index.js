@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const WebSocket = require("express-ws");
 const { dispatchMetaInformation } = require("./src/bots");
+const { writeToBucket } = require("./src/s3");
 
 const PORT = process.env.PORT || 3031;
 const MUSIC_API_PASSWORD = process.env.MUSIC_API_PASSWORD;
@@ -40,6 +41,7 @@ app.post("/newsong", (req, res) => {
 sendToSocket = song => {
   if (song !== "") {
     dispatchMetaInformation(song);
+    writeToBucket(song);
     wss.clients.forEach(client => {
       client.send(song);
     });
