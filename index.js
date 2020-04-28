@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const WebSocket = require("express-ws");
-const { dispatchMetaInformation } = require("./src/bots");
+const { dispatchMetaInformation } = require("./src/http");
 const { writeToBucket } = require("./src/s3");
 
 const PORT = process.env.PORT || 3031;
