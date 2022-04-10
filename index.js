@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const WebSocket = require("express-ws");
+const cors = require("cors");
 const { dispatchMetaInformation } = require("./src/http");
 const { writeToBucket } = require("./src/s3");
 
@@ -13,6 +14,8 @@ let sendToSocket = () => {};
 const app = express();
 const expressWs = WebSocket(app);
 const wss = expressWs.getWss("/");
+
+app.use(cors());
 
 app.use(
   bodyParser.json({

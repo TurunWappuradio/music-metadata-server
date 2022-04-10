@@ -20,6 +20,7 @@
   "dependencies": {
     "aws-sdk": "~2.664.0",
     "bufferutil": "4.0.1",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-ws": "^4.0.0",
     "node-fetch": "~2.6.0",
