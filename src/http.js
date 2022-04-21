@@ -46,7 +46,7 @@ function dispatchMetaInformation(song) {
 
   return Promise.all([
     sendTelegramMessage(`Biisi: <b>${song}</b>`),
-    sendToStream(song)
+    //sendToStream(song)
   ]).then(() => console.log("Succesfull delivery"));
 }
 
