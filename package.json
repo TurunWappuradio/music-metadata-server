@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/TurunWappuradio/music-metadata-server#readme",
   "dependencies": {
-    "aws-sdk": "~2.664.0",
+    "aws-sdk": "^2.1478.0",
     "bufferutil": "4.0.1",
     "cors": "^2.8.5",
     "express": "^4.16.4",
